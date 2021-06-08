@@ -33,3 +33,4 @@ end
 robot = SerialLink(L);
 robot.name='IRB_140';
 robot.qlim=qlim;
+robot.d6=65e-3;

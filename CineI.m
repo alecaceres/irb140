@@ -4,11 +4,10 @@ function q=CineI(robot,MTH,ci)
     a2= robot.a(3);
     d1= robot.d(1);
     d4= robot.d(4);
-    d6= 0.065;
+    d6= robot.d6;
     P6= [0 0 d6 1]';
 
-    %Ptcp= MTH*P6;
-    Ptcp=[.515 0 .712 1]';
+    Ptcp= MTH*P6;
     Ptcp= num2cell(reshape(Ptcp,1,[]));
     [Pxtcp, Pytcp, Pztcp, ~]= deal(Ptcp{:});
 
@@ -66,11 +65,9 @@ function q=CineI(robot,MTH,ci)
                 theta1_  theta2c  theta3a_;
                 theta1_  theta2c_ theta3a_;];
 
-    % theta5
-
     % Obtener soluciones completas
     for i=1:len(theta123)
-        R06=eye(3); % aún queda por analizar la rotación final Rz(?)*Ry(?)*Rx(?)
+        R06=rotz(x)*roty(y)*rotz(z);
         R03= MTH(1:3,1:3);
         R36= R03'*R06;
         R36cells= num2cell(reshape(R36,1,[]));
