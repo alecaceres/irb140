@@ -1,5 +1,4 @@
 function q=CineI(robot,MTH,ci)
-    % aún sin terminar
     a1= robot.a(2);
     a2= robot.a(3);
     d1= robot.d(1);
@@ -11,11 +10,11 @@ function q=CineI(robot,MTH,ci)
     Ptcp= num2cell(reshape(Ptcp,1,[]));
     [Pxtcp, Pytcp, Pztcp, ~]= deal(Ptcp{:});
 
-    % Obtención de theta1
+    % Obtenciï¿½n de theta1
     theta1= atan2(Pytcp, Pxtcp);
     theta1_= pi+theta1;
 
-    % Obtención de theta3
+    % Obtenciï¿½n de theta3
     s= Pztcp-d1;
     r=  sqrt((Pxtcp-a1*cos(theta1))^2+(Pytcp-a1*sin(theta1))^2);
     r_= -r;
@@ -37,7 +36,7 @@ function q=CineI(robot,MTH,ci)
     theta3a= -(pi/2+alphaa);
     theta3a_= -(pi/2+alphaa_);
 
-    % Obtención de theta2
+    % Obtenciï¿½n de theta2
     omega= atan2(s, r);
     omega_= atan2(s, r_);
     omegaa= atan2(s, ra);
@@ -55,7 +54,7 @@ function q=CineI(robot,MTH,ci)
     theta2c= -(omegaa-lambdaa_-pi/2);
     theta2c_= -(omegaa_-lambdaa_-pi/2);
 
-    % Solución para el punto de muñeca
+    % Soluciï¿½n para el punto de muï¿½eca
     theta123 = [theta1   theta2   theta3;
                 theta1   theta2_  theta3;
                 theta1   theta2a  theta3_;

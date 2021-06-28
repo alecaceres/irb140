@@ -8,19 +8,27 @@ function tau=LEDiIn(robot, q, qd, qdd, g, pext)
     d=robot.d;
     offset=robot.offset;
 
+    A=zeros(4,4,N+1,N+1); % recordar restar siempre 1 a cada índice
     % LE2
-
+    for i=1:N
+        A(:,:,i,i)=eye(4);
+        for j=i+1:N
+            A(:,:,i,j)=A(:,:,i,j-1)*DHmod(offset(j), d(j), a(j), alfa(j));
+        end
+    end
+    
     % LE3
     U=zeros(4,4,N,N);
-    Q = [0 -1  0   0;
+    Qr = [0 -1  0   0;
           1 0   0   0;
           0 0   0   0;
           0 0   0   0]; % ya que todos los eslabones son rotatorios
-    for i=1:N
-        for j=1:i
-            A0j_1=DH(offset(1:j-1),d(1:j-1),a(1:j-1),alpha(1:j-1));
-            Aj_1i=DH(offset(j-1:i),d(j-1:i),a(j-1:i),alpha(j-1:i));
-            U(i,j)=A0j_1*Q*Aj_1i;
+    Qt = zeros(4,4);
+    Qt(3,4)=1;
+    Q=[Qr Qt];
+    for i=2:N+1
+        for j=2:i+1
+            U(i+1,j+1)=A(:,:,1,j-1)*Q(j-1)*A(:,:,j-1,i);
             end
         end
     end
